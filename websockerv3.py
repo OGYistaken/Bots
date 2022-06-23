@@ -9,7 +9,8 @@ from random import choice
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from fake_useragent import UserAgent
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 
@@ -29,19 +30,24 @@ def bros() :
     print(userAgent)
     options.add_argument(f'user-agent={userAgent}')
     options = webdriver.ChromeOptions()
+    options.add_argument("start-maximized")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option('useAutomationExtension', False)
     options.add_extension('extension_1_6_7_0.crx')
     options.add_extension('extension_1_3_1_0.crx')
     chrome = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     chrome.get("https://watcher.guru/coin/sportoken")
-   
-    chrome.execute_script("window.open('https://watcher.guru/coin/sportoken');")
     print("yolladım")
-    time.sleep(10)
     print("Tıkladım")
-    element = chrome.find_element(By.XPATH, '//*[@id="vote-button"]')
+    element = chrome.find_element(By.XPATH, '//*[@id="vote-button"]') 
     element.click();
+    WebDriverWait(chrome, 10).until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR,"iframe[name^='a-'][src^='https://www.google.com/recaptcha/api2/anchor?']")))
+    WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[@id='recaptcha-anchor']"))).click()
+    chrome.find_element(By.XPATH, "//*[@id='solver-button']").click()
+
+    
     print("Tıkladım v2")
-    time.sleep(30)
+    time.sleep(50)
  
 
 
