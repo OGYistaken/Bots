@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from random import choice
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from fake_useragent import UserAgent
 
 
 
@@ -22,14 +23,26 @@ print(get_proxy())
 
 
 def bros() :
+    options = Options()
+    ua = UserAgent()
+    userAgent = ua.random
+    print(userAgent)
+    options.add_argument(f'user-agent={userAgent}')
     options = webdriver.ChromeOptions()
     options.add_extension('extension_1_6_7_0.crx')
+    options.add_extension('extension_1_3_1_0.crx')
     chrome = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     chrome.get("https://watcher.guru/coin/sportoken")
    
     chrome.execute_script("window.open('https://watcher.guru/coin/sportoken');")
     print("yolladım")
-    time.sleep(20)
+    time.sleep(10)
+    print("Tıkladım")
+    element = chrome.find_element(By.XPATH, '//*[@id="vote-button"]')
+    element.click();
+    print("Tıkladım v2")
+    time.sleep(30)
+ 
 
 
 bros()
