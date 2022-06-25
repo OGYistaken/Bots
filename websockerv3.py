@@ -42,20 +42,20 @@ def bros() :
     element = chrome.find_element(By.XPATH, '//*[@id="vote-button"]') 
     element.click();
     time.sleep(5)
-    iframes = chrome.find_elements_by_tag_name("iframe")
+    iframes = chrome.find_elements(By.TAG_NAME, "iframe")
     chrome.switch_to.frame(chrome.find_elements_by_tag_name("iframe")[2])
     check_box = WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.ID ,"recaptcha-anchor")))
     check_box.click()
     time.sleep(15)
+    chrome.switch_to.default_content()
    # iframes = chrome.find_elements_by_tag_name("iframe")
-    #chrome.switch_to.frame(chrome.find_elements_by_xpath("/html/body/div[6]/div[4]/iframe"))
-    #capt_btn = WebDriverWait(chrome, 50).until(
-     #          EC.element_to_be_clickable((By.XPATH ,'//button[@id="solver-button"]'))
-    #)
+    chrome.switch_to.frame(chrome.find_elements_by_tag_name("iframe")[3])
+    chrome.find_element(By.ID, "solver-button").click()
+    #capt_btn = WebDriverWait(chrome, 30).until(EC.element_to_be_clickable((By.XPATH ,'//button[@id="solver-button"]')))
     #capt_btn.click()
     print("Tıkladım v2")
     time.sleep(500)
-    #//*[@id="solver-button"]  /html/body/div[7]/div[4]/iframe
+    #//*[@id="solver-button"]  /html/body/div[7]/div[4]/iframe  https://www.google.com/recaptcha/api2/bframe?
 
 
 bros()
